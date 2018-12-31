@@ -1,0 +1,26 @@
+$def with (page)
+
+<html>
+<head>
+    <title>My Thermostat</title>
+    <style>
+        #menu {
+            width: 200px;
+            float: right;
+        }
+    </style>
+    <!-- import plugin script -->
+    <script src='/static/Chart.min.js'></script>
+</head>
+<body>
+
+<a href="/">Home</a>
+<a href="/list_programs">Edit Program</a>
+<br>
+
+$:page
+
+
+
+</body>
+</html>

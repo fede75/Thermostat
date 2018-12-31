@@ -1,0 +1,67 @@
+$def with (last_temp,list_temp,formManual,active_program)
+
+$ data=last_temp[0]
+
+<BR>
+$if data.heating==0:
+    <IMG src='/static/off.png' HEIGHT="50">
+$else:
+    <IMG src='/static/on.png' HEIGHT=50">
+Temperatura Actual: <FONT color="blue">$data.temp</FONT>
+<BR>
+<BR>
+$if active_program is not None:
+    AUTOMATIC PROGRAM DAY:$active_program.day  HOUR_INI=$active_program.hour_ini    HOUR_END: $active_program.hour_end   TEMP: $active_program.temp
+$else:
+    <font color="red">NOT PROGRAM DEFINED. USING MANUAL TEMP</font>
+
+<FORM action="" method="post">
+    $:formManual.render()
+</FORM>
+
+$ labels=""
+$ data=""
+$ data2=""
+$for temp in list_temp:
+    $ labels=str(temp.day)[14:16]+","+labels
+    $ data = str(temp.temp)[0:3]+","+data
+    $ data2 = str(temp.tem_des)[0:3]+","+data2
+
+
+<CANVAS id="temps" width="600" height="250"></CANVAS>
+<SCRIPT>
+    // line chart data
+    var tempData = {
+        labels : [$labels],
+        datasets : [
+                {
+            fillColor : "rgba(220,0,0,0.5)",
+            strokeColor : "#FF0000",
+            pointColor : "#FFFFFF",
+            pointStrokeColor : "#FF0000",
+            data : [$data2]
+        },
+        {
+            fillColor : "rgba(0,0,220,0.5)",
+            strokeColor : "#0000AA",
+            pointColor : "#fff",
+            pointStrokeColor : "#0000AA",
+            data : [$data]
+        }
+    ]
+    }
+    // get line chart canvas
+    var temps = document.getElementById('temps').getContext('2d');
+    // draw line chart
+    new Chart(temps).Line(tempData,{
+        scaleShowVerticalLines: false,
+        bezierCurve : true,
+        bezierCurveTension : 0.4,
+        scaleOverride : true,
+        scaleSteps : 15,
+        scaleStepWidth : 1,
+        scaleStartValue : 15
+    });
+
+</SCRIPT>
+

@@ -1,0 +1,9 @@
+$def with (programs)
+<ul>
+$for program in programs:
+    <li id="$program.id">$program.day $program.hour_ini $program.hour_end $program.temp
+        <a href='/edit/$program.id'>MODIFICAR</a>
+        <a href='/delete/$program.id'>BORRAR</a></li>
+</ul>
+
+<a href="/new_program">NEW PROGRAM </a>
